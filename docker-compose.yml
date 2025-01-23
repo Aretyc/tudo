@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  tudo-app:
+    build: .
+    volumes:
+      - ./src:/var/www/html
+      - ./.docker:/app
+    ports:
+      - "8080:80"

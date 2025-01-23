@@ -7,21 +7,9 @@ RUN pip3 install selenium==3.141.0
 # Install geckodriver
 COPY ./.docker/geckodriver /usr/bin/
 
-# Copy the files
-COPY ./admin/ /var/www/html/admin/
-COPY ./images/ /var/www/html/images/
-COPY ./includes/ /var/www/html/includes/
-COPY ./style/ /var/www/html/style/
-COPY ./templates/ /var/www/html/templates/
-COPY ./templates_c/ /var/www/html/templates_c/
-COPY ./vendor/ /var/www/html/vendor/
-COPY ./.htaccess /var/www/html/.htaccess
-COPY ./favicon.ico /var/www/html/favicon.ico
-COPY ./*.php /var/www/html/
+
 
 # Copy docker stuff
-COPY ./.docker/emulate_admin.py /app/emulate_admin.py
-COPY ./.docker/entrypoint.sh /app/entrypoint.sh
 COPY ./.docker/setup.sql /app/setup.sql
 RUN chmod a+r /app/setup.sql
 
