@@ -8,6 +8,10 @@ services:
       - ./.docker:/app
     ports:
       - "8080:80"
+    networks:
+      - tudo_net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   rdesktop:
     # login abc:abc
@@ -15,6 +19,8 @@ services:
       context: .
       dockerfile: rdesktop
     container_name: rdesktop
+    volumes:
+      - ./notes:/config/Desktop/notes
     environment:
       - PUID=1000
       - PGID=1000
@@ -24,3 +30,12 @@ services:
       - 5589:3389
     links:
       - "tudo:tudo"
+    networks:
+      - tudo_net
+
+networks:
+  tudo_net:
+    # Specify driver options
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.host_binding_ipv4: "127.0.0.1"

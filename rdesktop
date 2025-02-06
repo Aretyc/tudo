@@ -1,13 +1,15 @@
 FROM lscr.io/linuxserver/rdesktop:ubuntu-xfce
 
-WORKDIR /home/abc
 
+WORKDIR /home/abc
+RUN apt-get clean
 RUN apt-get update
-RUN apt-get install wget 
+RUN apt-get install -y wget python3 python3-pip postgresql-client iproute2 xfce4-screenshooter
 RUN wget https://go.microsoft.com/fwlink/?LinkID=760868 -O code.deb
 RUN apt install -y ./code.deb
 
 
-COPY ./burpsuite.sh /home/abc
-RUN chmod +x burpsuite.sh
-# RUN ./burpsuite.sh -y 
+COPY /burpsuite.sh /home/abc
+RUN chmod +x /home/abc/burpsuite.sh
+
+

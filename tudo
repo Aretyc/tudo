@@ -22,8 +22,15 @@ RUN chmod 0644 /etc/cron.d/emulate_admin &&\
 COPY ./.docker/vhost.conf /etc/apache2/sites-enabled/000-default.conf
 
 # Allow www-data to manage files
-RUN chown -R www-data:www-data /var/www/html
 
+RUN chown -R www-data:www-data /var/www/html
+#RUN chmod 666 /var/www/html
+
+
+RUN echo "listen_addresses = '*'" >> /etc/postgresql/11/main/postgresql.conf
+RUN echo 'host    all         all         172.17.0.0/16        md5' >> /etc/postgresql/11/main/pg_hba.conf 
+RUN echo 'host    all         all         172.18.0.0/16        md5' >> /etc/postgresql/11/main/pg_hba.conf 
+RUN service postgresql restart
 # Entrypoint for `docker run` command
 EXPOSE 80
 ENTRYPOINT ["/bin/sh", "/app/entrypoint.sh"]
