@@ -1,10 +1,26 @@
-version: '3.8'
-
 services:
-  tudo-app:
-    build: .
+  tudo:
+    build:
+      context: .
+      dockerfile: tudo
     volumes:
       - ./src:/var/www/html
       - ./.docker:/app
     ports:
       - "8080:80"
+
+  rdesktop:
+    # login abc:abc
+    build:
+      context: .
+      dockerfile: rdesktop
+    container_name: rdesktop
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+    restart: unless-stopped
+    ports:
+      - 5589:3389
+    links:
+      - "tudo:tudo"

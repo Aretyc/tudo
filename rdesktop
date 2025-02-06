@@ -1,0 +1,13 @@
+FROM lscr.io/linuxserver/rdesktop:ubuntu-xfce
+
+WORKDIR /home/abc
+
+RUN apt-get update
+RUN apt-get install wget 
+RUN wget https://go.microsoft.com/fwlink/?LinkID=760868 -O code.deb
+RUN apt install -y ./code.deb
+
+
+COPY ./burpsuite.sh /home/abc
+RUN chmod +x burpsuite.sh
+# RUN ./burpsuite.sh -y 
